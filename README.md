@@ -1,2 +1,2 @@
 # pg-test-week
-An other front end test
+Another front end test
