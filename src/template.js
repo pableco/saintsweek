@@ -9,7 +9,6 @@ export default class Template {
     }
 
     items(weekData) {
-        console.log(weekData);
         function isToday(momentDate) {
             return momentDate.isSame(moment(), 'd');
         }
