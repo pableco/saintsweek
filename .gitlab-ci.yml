@@ -1,0 +1,30 @@
+image: 
+
+cache:
+  paths:
+  - node_modules/
+  - sonar-scanner-2.6.1/
+
+lint:
+  script:
+  - npm install
+  - npm run lint
+
+unit_tests:
+  script:
+  - npm install
+  - npm test
+  - npm run check-coverage
+  - "[ -d sonar-scanner-2.6.1 ] || curl --insecure -OL https://sonarsource.bintray.com/Distribution/sonar-scanner-cli/sonar-scanner-2.6.1.zip"
+  - "[ -d sonar-scanner-2.6.1 ] || unzip sonar-scanner-2.6.1.zip"
+  - ./sonar-scanner-2.6.1/bin/sonar-scanner -Dsonar.host.url=http://registry.roiback.com:9000
+
+publish:
+  stage: deploy
+  script:
+    - npm install
+    - npm run dist
+    - npm publish
+  only:
+    - tags
+    - triggers

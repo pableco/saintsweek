@@ -1,0 +1,17 @@
+dist/stats.hml
+coverage
+test
+example
+webpack.config.dev.js
+webpack.config.dist.js
+.babelrc
+.eslintignore
+.eslintrc
+.npmignore
+.npmrc
+.gitlab-ci.yml
+.sonar
+.idea
+.vscode
+sonar-scanner-2.6.1
+sonar-scanner-2.6.1.zip
