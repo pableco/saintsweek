@@ -5,7 +5,7 @@
 
 
 import chai from 'chai';
-import Hello from '../src/';
+import SaintsWeek from '../src/';
 
 chai.should();
 
@@ -17,14 +17,14 @@ describe('Example test', () => {
 
 });
 
-describe('Hello', () => {
+describe('SaintsWeek', () => {
 
     it('renders a table', () => {
         const data = { onEvent: () => { } };
         
     });
 
-    it('prints "heders"', () => {
+    it('prints "headers"', () => {
         
     });
 
