@@ -1,5 +1,66 @@
-h1 {
+.@{saints-week__block-name}{
+
     display: flex;
-    margin: 1rem;
-    padding: 1rem;
+
+    &__header {
+        display: flex;
+    }
+
+    &__page {
+        width: 45%;
+        padding: 1em;
+
+        &--odd{
+            padding-right: @saints-week__with--margin-odd;
+            & .@{saints-week__block-name}__header{
+                justify-content: flex-start;
+            }
+            & .@{saints-week__block-name}__grid-header,
+            & .@{saints-week__block-name}__grid-item{
+                grid-template-columns: 15% 12% 73%;
+            }
+        }
+
+        &--even{
+
+            padding-left: @saints-week__with--margin-even;
+            & .@{saints-week__block-name}__header{
+                justify-content: flex-end;
+            }
+            & .@{saints-week__block-name}__grid-header,
+            & .@{saints-week__block-name}__grid-item{
+                grid-template-columns: 85% 15%;
+            }
+        }
+    }
+
+    &__range{
+
+        &-date{
+            padding-bottom: .5em;
+        }
+
+        &-month{
+            padding: 0 2em;
+        }
+    }
+
+    &__grid{
+
+        &-header {
+            display: grid;
+        }
+
+        &-item{
+            display: grid;
+
+            &-day{
+                padding-top: 1em;
+            }
+
+            &-line{
+                display: block;
+            }
+        }
+    }
 }

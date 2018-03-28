@@ -1,6 +1,96 @@
-h1{
-    font-size: 2rem;
-    letter-spacing: .3rem;
-    text-transform: uppercase;
-    border-radius: 1rem;
+
+.@{saints-week__block-name}{
+
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 10px;
+    color: @saints-week__default-color;
+    border: 1.5em @saints-week__bg-table solid;
+
+    &__page {
+
+        &--odd{
+            border-right: @saints-week__border--page;
+            background: url(./img/punching.svg) 98% repeat-y;
+            background-size: auto 100%;
+        }
+
+        &--even{
+            border-left: @saints-week__border--page;
+            background: url(./img/punching.svg) 2% repeat-y;
+            background-size: auto 100%;
+        }
+    }
+
+    &__range{
+
+        &-date{
+            font-size: 2.3em;
+        }
+
+        &-month{
+            font-size: 1.4em;
+        }
+    }
+
+    &__grid {
+        border: @saints-week__border--default;
+
+        &-header {
+            background: @saints-week__header--background;
+            border: @saints-week__border--header;
+            font-size: 1.1em;
+            text-align: center;
+        }
+
+        &-day {
+            border-right: @saints-week__border--header;
+        }
+
+        &-time {
+            border-right: @saints-week__border--header;
+        }
+
+        &-task {
+            border-right: @saints-week__border--header;
+        }
+
+        &-item{
+            display: grid;
+
+            border: @saints-week__border--medium;
+            border-width: 0 1px 1px 1px;
+
+            &-day{
+                border-right: @saints-week__border--default;
+                color: @saints-week__medium-color;
+                text-align: center;
+
+                &-str{
+                    display: block;
+                    font-size: 1.5em;
+                }
+                &-numb{
+                    display: block;
+                    font-size: 2.3em;
+                }
+            }
+            
+            &-time {
+                border-right: @saints-week__border--default;
+            }
+
+            &-task {
+                border-right: @saints-week__border--default;
+            }
+
+            &-line{
+                min-height: 1rem;
+                border-top: @saints-week__border--default;
+            }
+
+            &-line:nth-of-type(4n - 3){
+                border: 0px;
+            }
+        }
+    }
 }

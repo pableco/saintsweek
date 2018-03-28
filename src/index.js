@@ -24,8 +24,8 @@ export default class SaintsWeek {
     }
 
     init(weekData){
-        const template = new Template();
-        return template.render(weekData);
+        const template = new Template(weekData);
+        return template.render();
     }
 
 }

@@ -37,7 +37,13 @@ module.exports = {
             {
                 test: /\.less$/,
                 loader: ExtractTextPlugin.extract('style-loader', 'css-loader?sourceMap!postcss-loader?sourceMap!less-loader?sourceMap')
+            },
+            // extract images
+            {
+                test: /\.(svg|png|gif)/,
+                loader: 'url-loader?limit=10000&name=[name].[ext]'
             }
+
         ]
     },
     postcss: function () {

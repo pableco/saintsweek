@@ -4,83 +4,138 @@ import { escapeForHTML } from './helpers';
 
 export default class Template {
 
-    constructor() {
+    constructor(weekData) {
+        this.weekData = weekData;
         this.blockBEM = 'saints-week';
+        this.firstDate = weekData[0];
+        this.lastDate = weekData[6];
+        this.rangeDatesStr = `${this.firstDate.get('date')}-${this.lastDate.get('date')}`;
+        this.firstMonth = this.firstDate.format('MMMM');
+        this.lastMonth = this.lastDate.format('MMMM');
+        this.isSameMonth = this.firstMonth == this.lastMonth;
+        this.firstYear = this.firstDate.format('YYYY');
+        this.lastYear = this.lastDate.format('YYYY');
+        this.isSameYear = this.firstYear == this.lastYear;
+        this.currentMonthRange = this.isSameMonth ? `${this.firstMonth} ${this.firstYear}` : `${this.firstMonth} ${this.firstYear} - ${this.lastMonth} ${this.lastYear}`;
     }
 
-    items(weekData) {
-        function isToday(momentDate) {
-            return momentDate.isSame(moment(), 'd');
-        }
-        return weekData.reduce((a, item) => a + `
-        <tr class="${this.blockBEM}__item 
-            ${isToday(item) ? `${this.blockBEM}__item--today` : ''}"
-            data-id="${item.format('YYYY-MM-DD')}">
-                <td class="${this.blockBEM}__item-day">
-                <span class="${this.blockBEM}__item-day-str">${item.format('dd')}<span>
-                <span class="${this.blockBEM}__item-day-numb">${item.format('D')}<span>
-                </td>
-                <td></td> 
-                <td></td>
-                <td></td> 
-                <td></td>
-        </tr>`, '');
-    }
-
-    body(weekData) {
+    oddPageHeader (){
         return (
-            `<div class="${this.blockBEM}__body">
-            <table class="${this.blockBEM}__table">
-            <tr class="${this.blockBEM}__table-header">
-                <th class="${this.blockBEM}__table-day">day</th>
-                <th class="${this.blockBEM}__table-time">time</th> 
-                <th class="${this.blockBEM}__table-description">description</th>
-                <th class="${this.blockBEM}__table-task">task</th> 
-                <th class="${this.blockBEM}__table-done">done</th>
-            </tr>
-            ${this.items(weekData)}
-            </table>
-            </div>`
+            `<span class="${this.blockBEM}__range-date">
+                ${this.rangeDatesStr}
+            </span>
+            <span class="${this.blockBEM}__range-month">
+                ${this.currentMonthRange}
+            </span>`
         )
     }
 
-    header(weekData) {
-        const firstDate = weekData[0];
-        const lastDate = weekData[6];
-        const rangeDatesStr = `${firstDate.get('date')} - ${lastDate.get('date')}`;
-        const firstMonth = firstDate.format('MMMM');
-        const lastMonth = lastDate.format('MMMM');
-        const isSameMonth = firstMonth == lastMonth;
-        const firstYear = firstDate.format('YYYY');
-        const lastYear = lastDate.format('YYYY');
-        const isSameYear = firstYear == lastYear;
-        const currentMonthRange = isSameMonth ? `${firstMonth} ${firstYear}` : `${firstMonth} ${firstYear} - ${lastMonth} ${lastYear}`;
-        const oddPageHeader = `${rangeDatesStr} <span>${currentMonthRange}</span>`;
-        const evenPageHeader = `<span>${currentMonthRange}</span> ${rangeDatesStr}`;
+    evenPageHeader() {
+        return (
+            `<span class="${this.blockBEM}__range-month">
+                ${this.currentMonthRange}
+            </span>
+            <span class="${this.blockBEM}__range-date">
+                ${this.rangeDatesStr}
+            </span>`
+        )
+    }
+
+    htmlLines (){
         return(
-            `<header class="${this.blockBEM}__header">
-            <div class="${this.blockBEM}__header-odd">${oddPageHeader}</div>
-            <div class="${this.blockBEM}__header-even">${evenPageHeader}</div>
-            </header>`
-        )
+            `<span class="${this.blockBEM}__grid-item-line"></span>
+            <span class="${this.blockBEM}__grid-item-line"></span>
+            <span class="${this.blockBEM}__grid-item-line"></span>
+            <span class="${this.blockBEM}__grid-item-line"></span>`
+        );
     }
-    footer() {
+
+    isToday(momentDate) {
+        return momentDate.isSame(moment(), 'd');
+    }
+
+    oddItems() {
+        return this.weekData.reduce((a, item) => a + `
+        <div class="${this.blockBEM}__grid-item 
+            ${this.isToday(item) ? `${this.blockBEM}__grid-item--today` : ''}"
+            data-id="${item.format('YYYY-MM-DD')}">
+                <div class="${this.blockBEM}__grid-item-day">
+                    <span class="${this.blockBEM}__grid-item-day-str">${item.format('ddd')}</span>
+                    <span class="${this.blockBEM}__grid-item-day-numb">${item.format('D')}</span>
+                </div>
+                <div class="${this.blockBEM}__grid-item-time">
+                    ${this.htmlLines()}
+                </div> 
+                <div class="${this.blockBEM}__grid-item-description">
+                    ${this.htmlLines()}
+                </div>
+        </div>`, '');
+    }
+
+    evenItems() {
+        return this.weekData.reduce((a, item) => a + `
+        <div class="${this.blockBEM}__grid-item 
+            ${this.isToday(item) ? `${this.blockBEM}__grid-item--today` : ''}"
+            data-id="${item.format('YYYY-MM-DD')}">
+                <div class="${this.blockBEM}__grid-item-task">
+                ${this.htmlLines()}
+                </div> 
+                <div class="${this.blockBEM}__grid-item-done">
+                ${this.htmlLines()}
+                </div>
+        </div>`, '');
+    }
+
+    oddBody() {
         return (
-            `<div class="${this.blockBEM}__footer">
-            Pablo Grillo -${moment().get('year')}
-            </div>`
+            `<div class="${this.blockBEM}__grid-header">
+                <div class="${this.blockBEM}__grid-day">Day</div>
+                <div class="${this.blockBEM}__grid-time">Time</div> 
+                <div class="${this.blockBEM}__grid-description">Description</div>
+            </div>
+            ${this.oddItems()}`
         )
     }
 
-    render(weekData) {
-        const header = this.header(weekData);
-        const footer = this.footer();
-        const body = this.body(weekData)
+    evenBody() {
+        return (
+            `<div class="${this.blockBEM}__grid-header">
+                <div class="${this.blockBEM}__grid-task">Task</div> 
+                <div class="${this.blockBEM}__grid-done">Done</div>
+            </div>
+            ${this.evenItems()}`
+        )
+    }
+
+    oddPage(){
+        return(
+            `<article class="${this.blockBEM}__page ${this.blockBEM}__page--odd">
+                <header class="${this.blockBEM}__header">
+                    ${this.oddPageHeader()}
+                </header>
+                ${this.oddBody()}
+            </article>`
+        )
+    }
+
+    evenPage() {
+        return (
+            `<article class="${this.blockBEM}__page ${this.blockBEM}__page--even">
+                <header class="${this.blockBEM}__header">
+                    ${this.evenPageHeader()}
+                </header>
+                ${this.evenBody()}
+            </article>`
+        )
+    }
+
+    render() {
+        const oddPage = this.oddPage();
+        const evenPage = this.evenPage();
         return (
             `<section class="${this.blockBEM}">
-            ${header}
-            ${body}
-            ${footer}
+            ${oddPage}
+            ${evenPage}
             </section>`
         );
     }
