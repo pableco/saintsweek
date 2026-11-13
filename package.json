@@ -61,7 +61,7 @@
     "style-loader": "^0.18.2",
     "webpack": "^1.13.1",
     "webpack-dashboard": "^3.3.7",
-    "webpack-dev-server": "^1.16.3",
+    "webpack-dev-server": "^6.1.0",
     "webpack-visualizer-plugin": "^0.1.10"
   },
   "dependencies": {
